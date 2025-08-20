@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { createAudioUpload } from "@/actions/audio-actions";
 
 type RecordingState = "idle" | "recording" | "stopped";
 
@@ -139,6 +140,18 @@ export default function AudioRecorder() {
 
       if (response.ok) {
         setUploadSuccess(data.url);
+        console.log(data.url)
+        const fileUrl = data.url;
+
+        await createAudioUpload({
+        username: "guest_user",  // TODO - remove hard-coded values
+        audioname: fileName,
+        audio_url: fileUrl,
+        description: "Recorded via web app",
+        moderated: false,
+      });
+      
+
       } else {
         setError(data.error || "Upload failed");
       }
