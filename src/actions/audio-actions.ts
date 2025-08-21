@@ -36,7 +36,14 @@ export async function getModeratedAudioUploads() {
 
   const { data, error } = await supabase
     .from('AudioUpload')
-    .select('*')
+    .select(`
+      *,
+      AudioUpload_AudioTheme (
+        AudioTheme (
+          name
+        )
+      )
+    `)
     .eq('moderated', true)
 
   if (error) {
@@ -44,5 +51,14 @@ export async function getModeratedAudioUploads() {
     throw new Error(error.message)
   }
 
-  return data
+  // Transform: flatten nested objects into just an array of names
+  const uploadsWithThemes = data.map(upload => ({
+    ...upload,
+    themes: upload.AudioUpload_AudioTheme.map(
+      (link: { AudioTheme: { name: string } }) => link.AudioTheme.name
+    )
+  }))
+  console.table(uploadsWithThemes)
+  return uploadsWithThemes
 }
+

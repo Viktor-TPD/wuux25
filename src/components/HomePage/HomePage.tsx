@@ -21,6 +21,7 @@ type DbAudioRow = {
   coordinateX: number;
   coordinateY: number;
   description?: string;
+  themes?: string[];
 };
 
 const HomePage: React.FC = () => {
@@ -47,6 +48,10 @@ const HomePage: React.FC = () => {
     async function fetchData() {
       try {
         const data = await getModeratedAudioUploads();
+        console.log(
+          "Fetched moderated audio uploads:",
+          data
+        );
         if (!data) return;
 
         // Map DB rows → AudioRecording interface
@@ -59,6 +64,7 @@ const HomePage: React.FC = () => {
           latitude: row.coordinateX,
           longitude: row.coordinateY,
           description: row.description,
+          themes: row.themes ?? [],
         }));
 
         console.table(recordings);

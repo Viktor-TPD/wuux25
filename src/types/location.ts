@@ -14,6 +14,7 @@ export interface AudioRecording {
   longitude: number;
   description?: string;
   isInteractable?: boolean;
+  themes?: string[];
 }
 
 export interface MapProps {
