@@ -1,6 +1,6 @@
 import React from "react";
 
-type Category = "story" | "music" | "nature" | "other";
+type Category = "underhållande" | "spännande" | "gripande" | "annat";
 
 interface CategorySelectorProps {
   selectedCategory: Category;
@@ -8,10 +8,10 @@ interface CategorySelectorProps {
 }
 
 const categories: { value: Category; label: string; emoji: string }[] = [
-  { value: "story", label: "Personal Story", emoji: "💬" },
-  { value: "music", label: "Music/Performance", emoji: "🎵" },
-  { value: "nature", label: "Nature Sounds", emoji: "🌿" },
-  { value: "other", label: "Other", emoji: "🎙️" },
+  { value: "underhållande", label: "Underhållande", emoji: "" },
+  { value: "spännande", label: "Spännande", emoji: "" },
+  { value: "gripande", label: "Gripande", emoji: "️" },
+  { value: "annat", label: "Annat", emoji: "" },
 ];
 
 const CategorySelector: React.FC<CategorySelectorProps> = ({
