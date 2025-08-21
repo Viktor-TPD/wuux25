@@ -2,7 +2,7 @@ import React from "react";
 import LocationPermission from "./LocationPermission";
 import CategorySelector from "./CategorySelector";
 
-type Category = "story" | "music" | "nature" | "other";
+type Category = "underhållande" | "spännande" | "gripande" | "annat";
 
 interface RecordingFormProps {
   soundName: string;
@@ -45,7 +45,7 @@ const RecordingForm: React.FC<RecordingFormProps> = ({
           type="text"
           value={soundName}
           onChange={(e) => onSoundNameChange(e.target.value)}
-          placeholder="T.ex. 'Morgonpromenad i parken'"
+          placeholder="T.ex. 'Spontan tanke kring träd'"
           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-gray-200 text-sm"
         />
       </div>
