@@ -31,7 +31,7 @@ export function Header({
 
   return (
     <header className={`bg-(--dark-grey) shadow-md ${className}`}>
-      <div className="flex items-center justify-between px-4 py-3">
+      <div className="flex items-center justify-between px-10 py-8">
         {/* Left: Logo or site title */}
         <Link href="/" className="flex items-center">
           {logo ? (
@@ -86,7 +86,7 @@ export function Header({
       {/* Expanding menu */}
       {open && (
         <nav className="flex justify-center bg-(--dark-grey) border-b">
-          <ul className="flex-column gap-12 py-3">
+          <ul className="flex-col flex text-center gap-4 py-8">
             {links.map((l) => (
               <li key={l.href}>
                 <Link
