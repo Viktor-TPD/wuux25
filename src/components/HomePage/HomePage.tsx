@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useUserLocation } from "../../hooks/useUserLocation";
 import HeroSection from "./HeroSection";
@@ -9,6 +9,7 @@ import VoiceRecordingModal, {
   VoiceRecordingButton,
 } from "../VoiceRecordingModal";
 import { AudioRecording } from "../../types/location";
+import { getModeratedAudioUploads } from "@/actions/audio-actions";
 
 type ViewState = "hero" | "permissions" | "app";
 
@@ -28,7 +29,39 @@ const HomePage: React.FC = () => {
     stopWatching,
   } = useUserLocation();
 
-  // Sample audio recordings data - replace with your actual data from Supabase
+    const [audioRecordings, setAudioRecordings] = useState<AudioRecording[]>([]);
+  const [selectedRecording, setSelectedRecording] =
+    useState<AudioRecording | null>(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getModeratedAudioUploads();
+        if (!data) return;
+
+        // Map DB rows → AudioRecording interface
+        const recordings: AudioRecording[] = data.map((row: any) => ({
+          id: row.id,
+          createdAt: row.created_at,
+          title: row.audioname, // your DB field
+          audioUrl: row.audio_url,
+          latitude: row.coordinateX,
+          longitude: row.coordinateY,
+          description: row.description,
+        }));
+
+        console.table(recordings)
+
+        setAudioRecordings(recordings);
+      } catch (error) {
+        console.error("Error fetching moderated audio uploads:", error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+/*   // Sample audio recordings data - replace with your actual data from Supabase
   const [audioRecordings] = useState<AudioRecording[]>([
     {
       id: "1",
@@ -57,7 +90,7 @@ const HomePage: React.FC = () => {
   ]);
 
   const [selectedRecording, setSelectedRecording] =
-    useState<AudioRecording | null>(null);
+    useState<AudioRecording | null>(null); */
 
   // Hero Section Handlers
   const handleTestService = () => {

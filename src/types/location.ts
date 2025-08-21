@@ -7,11 +7,12 @@ export interface LocationData {
 
 export interface AudioRecording {
   id: string;
+  createdAt: string;
+  title?: string;
+  audioUrl: string;
   latitude: number;
   longitude: number;
-  audioUrl: string;
-  title?: string;
-  createdAt: string;
+  description: string;
   isInteractable?: boolean;
 }
 
