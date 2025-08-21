@@ -351,15 +351,11 @@ export default function VoiceRecordingModal({
             </div>
 
             {/* Timer text - positioned below the bar */}
-            <div className="flex justify-center text-sm text-gray-600 dark:text-gray-400 mt-2 py-2">
-              <span
-                className={`transition-opacity duration-500 ${
-                  recordingState !== "idle" ? "opacity-100" : "opacity-0"
-                }`}
-              >
-                {getDisplayTime()}
-              </span>
-            </div>
+            {recordingState !== "idle" && (
+              <div className="flex justify-center text-sm text-gray-600 dark:text-gray-400 mt-2 py-2">
+                <span>{getDisplayTime()}</span>
+              </div>
+            )}
           </div>
 
           {/* Record Button */}
@@ -505,9 +501,12 @@ export function VoiceRecordingButton({
   return (
     <button
       onClick={onClick}
-      className={`bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-lg ${className}`}
+      className={`bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-lg flex gap-1 justify-center w-80 ${className}`}
     >
-      💬 Got a story to share?
+      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zM19 11a1 1 0 0 1 2 0v1a9 9 0 0 1-8 8.94V22h3a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2h3v-1.06A9 9 0 0 1 3 12v-1a1 1 0 1 1 2 0v1a7 7 0 0 0 14 0v-1z" />
+      </svg>
+      <span>Har du en historia du vill dela?</span>
     </button>
   );
 }
