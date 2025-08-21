@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export type NavLink = { label: string; href: string; external?: boolean }
 
@@ -20,7 +21,9 @@ const DEFAULT_LINKS: NavLink[] = [
 
 export function Header({
   siteTitle = 'Vibbla',
-  logo,
+  logo = <Image src="/Vibbla_logo_white.svg" width={80}
+                      height={28}
+                      alt="logo"/>,
   links = DEFAULT_LINKS,
   className = '',
 }: HeaderProps) {
