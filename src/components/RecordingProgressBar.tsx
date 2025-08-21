@@ -43,7 +43,7 @@ const RecordingProgressBar: React.FC<RecordingProgressBarProps> = ({
         <div
           className={`bg-gray-200 dark:bg-gray-700 rounded-full transition-all duration-700 ease-in-out relative flex items-center justify-center ${
             recordingState === "idle"
-              ? "h-12 w-1/2"
+              ? "h-12 w-3/5"
               : recordingState === "recorded"
               ? "h-3 w-4/5" // Shrink to accommodate checkmark
               : "h-3 w-full"
