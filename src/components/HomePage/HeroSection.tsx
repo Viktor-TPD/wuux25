@@ -46,14 +46,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Test Service Button */}
             <button
               onClick={onTestService}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-4 px-6 rounded-lg transition-colors shadow-lg flex items-center gap-3 w-full max-w-xs font-inter"
+              className="bg-[#b6163a] text-white font-medium py-4 px-6 rounded-lg transition-colors shadow-lg flex items-center gap-3 w-full max-w-xs font-inter"
             >
               <span>Testa Tjänsten</span>
               <Image
                 src="/success-icon.svg"
                 alt="Success icon"
-                width={20}
-                height={20}
+                width={40}
+                height={40}
                 className="flex-shrink-0"
               />
             </button>
