@@ -6,8 +6,12 @@ import { useUserLocation } from "../hooks/useUserLocation";
 import LocationControls from "../components/LocationControls";
 import InteractiveMap from "../components/InteractiveMap";
 import { AudioRecording } from "../types/location";
+import VoiceRecordingModal, {
+  VoiceRecordingButton,
+} from "../components/VoiceRecordingModal";
 
 export default function MapDemo() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     location: userLocation,
     error,
@@ -71,6 +75,13 @@ export default function MapDemo() {
         <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-gray-100">
           Audio Map Demo
         </h1>
+
+        <VoiceRecordingButton onClick={() => setIsModalOpen(true)} />
+        <VoiceRecordingModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          userLocation={userLocation} // from your existing location hook
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Controls Sidebar */}
@@ -163,4 +174,4 @@ export default function MapDemo() {
       </div>
     </div>
   );
-} 
+}
