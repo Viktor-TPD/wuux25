@@ -11,29 +11,30 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   onLearnMore,
 }) => {
   return (
-    <div className="relative min-h-screen flex items-center justify-start">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/hero-background.jpg" // You'll need to add this image to public/
-          alt="Lindholmen background"
-          fill
-          className="object-cover"
-          priority
-        />
-        {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+    <div className="relative min-h-screen flex items-center justify-start overflow-hidden">
+      {/* Background Image with Overlay - Single Container */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: "url('/hero-background.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "right center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        {/* Dark overlay directly as a pseudo-element equivalent */}
+        <div className="absolute inset-0 bg-black/40"></div>
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="max-w-2xl">
           {/* Main Title */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight font-instrument">
             Upptäck Lindholmen genom delade röstminnen
           </h1>
 
-          {/* Description - positioned at center height */}
+          {/* Description */}
           <div className="mb-12">
             <p className="text-lg sm:text-xl text-gray-100 leading-relaxed font-inter">
               Promenera runt, lyssna på berättelser från andra och lämna kvar
@@ -46,7 +47,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Test Service Button */}
             <button
               onClick={onTestService}
-              className="bg-[#b6163a] text-white font-medium py-4 px-6 rounded-lg transition-colors shadow-lg flex items-center gap-3 w-full max-w-xs font-inter"
+              className="bg-[#b6163a] hover:bg-[#9d1331] text-white font-medium py-4 px-6 rounded-lg transition-colors shadow-lg flex items-center gap-3 w-full max-w-xs font-inter"
             >
               <span>Testa Tjänsten</span>
               <Image
@@ -79,25 +80,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({
               </svg>
             </button>
           </div>
-        </div>
-      </div>
-
-      {/* Optional: Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
-        <div className="animate-bounce">
-          <svg
-            className="w-6 h-6 text-white opacity-75"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            />
-          </svg>
         </div>
       </div>
     </div>
