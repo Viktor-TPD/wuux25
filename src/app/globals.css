@@ -3,6 +3,23 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --dark-grey: #444444;
+  --red: #D91A45;
+  --light-grey: #656565;
+  --blue: #491FD4;
+  --offwhite: #FFF9F1;
+  --green: #12BF74;
+  --lightlightgrey: #F1F1F1;
+  --font-inter: "Inter", sans-serif;
+  --font-instrument-sans: "Instrument Sans", sans-serif;
+
+}
+.font-inter {
+  font-family: var(--font-inter);
+}
+
+.font-instrument {
+  font-family: var(--font-instrument-sans);
 }
 
 @theme inline {
