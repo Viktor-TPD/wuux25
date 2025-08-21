@@ -30,3 +30,19 @@ export async function createAudioUpload(audioData: AudioUploadData) {
   revalidatePath('/')
   return data
 }
+
+export async function getModeratedAudioUploads() {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase
+    .from('AudioUpload')
+    .select('*')
+    .eq('moderated', true)
+
+  if (error) {
+    console.error('Database error getting moderated audio uploads:', error)
+    throw new Error(error.message)
+  }
+
+  return data
+}

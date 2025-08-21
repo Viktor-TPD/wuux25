@@ -1,59 +1,133 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+
 export default function HelpPage() {
+  const router = useRouter();
+
+  const handleTestService = () => {
+    router.push("/");
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
+    <div className="min-h-screen bg-[#FFF9F1] py-12 px-4 relative">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-8">
-          Hjälpcenter
+        {/* Main Title */}
+        <h1 className="text-4xl font-bold text-center text-[#401db2] mb-4 font-instrument">
+          Så här fungerar Vibbla
         </h1>
 
-        <div className="space-y-6">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-              Vanliga frågor
-            </h2>
+        {/* Subtitle */}
+        <p className="text-xl text-center text-[#401db2] mb-12 font-inter max-w-3xl mx-auto">
+          Promenera runt, lyssna på berättelser från andra och lämna kvar dina
+          egna minnen för framtiden.
+        </p>
 
-            <div className="space-y-4">
-              <details className="border-b border-gray-200 dark:border-gray-700 pb-4">
-                <summary className="font-medium text-gray-900 dark:text-gray-100 cursor-pointer">
-                  Hur spelar jag in ljud?
-                </summary>
-                <p className="mt-2 text-gray-600 dark:text-gray-400">
-                  Klicka på &ldquo;Har du en historia du vill dela?&rdquo;
-                  knappen på startsidan. Tillåt mikrofonåtkomst och börja spela
-                  in.
-                </p>
-              </details>
-
-              <details className="border-b border-gray-200 dark:border-gray-700 pb-4">
-                <summary className="font-medium text-gray-900 dark:text-gray-100 cursor-pointer">
-                  Varför behöver ni min plats?
-                </summary>
-                <p className="mt-2 text-gray-600 dark:text-gray-400">
-                  Vi använder din plats för att placera din ljudinspelning på
-                  rätt ställe på kartan så andra kan hitta den.
-                </p>
-              </details>
-
-              <details className="border-b border-gray-200 dark:border-gray-700 pb-4">
-                <summary className="font-medium text-gray-900 dark:text-gray-100 cursor-pointer">
-                  Hur lång tid tar det innan mitt ljud publiceras?
-                </summary>
-                <p className="mt-2 text-gray-600 dark:text-gray-400">
-                  All innehåll modereras manuellt. Det tar vanligtvis 24-48
-                  timmar innan ditt ljud blir synligt på kartan.
-                </p>
-              </details>
+        {/* Four Sections */}
+        <div className="space-y-2">
+          {/* Section 1 */}
+          <div className="bg-[#401db2] rounded-xl p-6 flex items-center gap-6">
+            <div className="flex-shrink-0">
+              <Image
+                src="/Vector.png"
+                alt="Explore map icon"
+                width={48}
+                height={48}
+                className="object-contain filter brightness-0 invert"
+              />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-xl font-semibold text-white mb-2 font-instrument">
+                Utforska kartan
+              </h3>
+              <p className="text-white/90 font-inter">
+                Se platser markerade med pinnar där varje pin är en berättelse.
+              </p>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-              Behöver du mer hjälp?
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
-              Kontakta oss på support@vibbla.se så hjälper vi dig!
-            </p>
+          {/* Section 2 */}
+          <div className="bg-[#401db2] rounded-xl p-6 flex items-center gap-6">
+            <div className="flex-shrink-0">
+              <Image
+                src="/mdi_unlocked-outline.png"
+                alt="Go to location icon"
+                width={48}
+                height={48}
+                className="object-contain filter brightness-0 invert"
+              />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-xl font-semibold text-white mb-2 font-instrument">
+                Gå till platsen
+              </h3>
+              <p className="text-white/90 font-inter">
+                När du är nära låses ljudklippet upp och du kan lyssna.
+              </p>
+            </div>
           </div>
+
+          {/* Section 3 */}
+          <div className="bg-[#401db2] rounded-xl p-6 flex items-center gap-6">
+            <div className="flex-shrink-0">
+              <Image
+                src="/bla 1.png"
+                alt="Listen and experience icon"
+                width={48}
+                height={48}
+                className="object-contain filter brightness-0 invert"
+              />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-xl font-semibold text-white mb-2 font-instrument">
+                Lyssna & upplev
+              </h3>
+              <p className="text-white/90 font-inter">
+                Sätt i hörlurarna och ta del av berättelser, minnen och ljud
+                från platsen.
+              </p>
+            </div>
+          </div>
+
+          {/* Section 4 */}
+          <div className="bg-[#401db2] rounded-xl p-6 flex items-center gap-6">
+            <div className="flex-shrink-0">
+              <Image
+                src="/guide_icon_4 1.png"
+                alt="Share your story icon"
+                width={48}
+                height={48}
+                className="object-contain filter brightness-0 invert"
+              />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-xl font-semibold text-white mb-2 font-instrument">
+                Dela din berättelse
+              </h3>
+              <p className="text-white/90 font-inter">
+                Tryck på &ldquo;Har du en historia du vill dela?&rdquo; för att
+                lämna kvar ditt eget minne som andra kan upptäcka.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Test Service Button - Under and to the right of last section */}
+        <div className="flex justify-end mt-6">
+          <button
+            onClick={handleTestService}
+            className="bg-[#b6163a] hover:bg-rose-700 text-white font-medium py-4 px-6 rounded-lg transition-colors shadow-lg flex items-center gap-3 font-inter"
+          >
+            <span>Testa Tjänsten</span>
+            <Image
+              src="/success-icon.svg"
+              alt="Success icon"
+              width={40}
+              height={40}
+              className="flex-shrink-0"
+            />
+          </button>
         </div>
       </div>
     </div>

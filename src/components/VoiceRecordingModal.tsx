@@ -8,7 +8,7 @@ import RecordingForm from "./RecordingForm";
 import Image from "next/image";
 
 type RecordingState = "idle" | "recording" | "recorded";
-type Category = "story" | "music" | "nature" | "other";
+type Category = "underhållande" | "spännande" | "gripande" | "annat";
 
 interface VoiceRecordingModalProps {
   isOpen: boolean;
@@ -25,7 +25,7 @@ export default function VoiceRecordingModal({
 }: VoiceRecordingModalProps) {
   // State
   const [recordingState, setRecordingState] = useState<RecordingState>("idle");
-  const [selectedCategory, setSelectedCategory] = useState<Category>("story");
+  const [selectedCategory, setSelectedCategory] = useState<Category>("annat");
   const [recordingTime, setRecordingTime] = useState(0);
   const [finalRecordingTime, setFinalRecordingTime] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
@@ -88,7 +88,7 @@ export default function VoiceRecordingModal({
     setIsPlaying(false);
     setSoundName("");
     setDescription("");
-    setSelectedCategory("story");
+    setSelectedCategory("annat");
     setLocationPermissionGranted(false);
     setIsRequestingLocation(false);
     setShowConfirmation(false);
