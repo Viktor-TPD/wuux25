@@ -13,6 +13,16 @@ import { getModeratedAudioUploads } from "@/actions/audio-actions";
 
 type ViewState = "hero" | "permissions" | "app";
 
+type DbAudioRow = {
+  id: string;
+  created_at: string;
+  audioname: string;
+  audio_url: string;
+  coordinateX: number;
+  coordinateY: number;
+  description?: string;
+};
+
 const HomePage: React.FC = () => {
   const router = useRouter();
   const [currentView, setCurrentView] = useState<ViewState>("hero");
@@ -29,7 +39,7 @@ const HomePage: React.FC = () => {
     stopWatching,
   } = useUserLocation();
 
-    const [audioRecordings, setAudioRecordings] = useState<AudioRecording[]>([]);
+  const [audioRecordings, setAudioRecordings] = useState<AudioRecording[]>([]);
   const [selectedRecording, setSelectedRecording] =
     useState<AudioRecording | null>(null);
 
@@ -40,17 +50,18 @@ const HomePage: React.FC = () => {
         if (!data) return;
 
         // Map DB rows → AudioRecording interface
-        const recordings: AudioRecording[] = data.map((row: any) => ({
+        const dbRows: DbAudioRow[] = Array.isArray(data) ? data : [];
+        const recordings: AudioRecording[] = dbRows.map((row) => ({
           id: row.id,
           createdAt: row.created_at,
-          title: row.audioname, // your DB field
+          title: row.audioname,
           audioUrl: row.audio_url,
           latitude: row.coordinateX,
           longitude: row.coordinateY,
           description: row.description,
         }));
 
-        console.table(recordings)
+        console.table(recordings);
 
         setAudioRecordings(recordings);
       } catch (error) {
@@ -60,37 +71,6 @@ const HomePage: React.FC = () => {
 
     fetchData();
   }, []);
-
-/*   // Sample audio recordings data - replace with your actual data from Supabase
-  const [audioRecordings] = useState<AudioRecording[]>([
-    {
-      id: "1",
-      latitude: 57.705659580527445, // Example coordinates near Gothenburg
-      longitude: 11.939961382990896,
-      audioUrl: "https://example.com/recording1.mp3",
-      title: "City Sounds",
-      createdAt: "2025-01-15T10:30:00Z",
-    },
-    {
-      id: "2",
-      latitude: 57.70582294452267,
-      longitude: 11.937830119821228,
-      audioUrl: "https://example.com/recording2.mp3",
-      title: "Street Music",
-      createdAt: "2025-01-14T15:45:00Z",
-    },
-    {
-      id: "3",
-      latitude: 57.705954781595516,
-      longitude: 11.936401346669678,
-      audioUrl: "https://example.com/recording3.mp3",
-      title: "Nature Sounds",
-      createdAt: "2025-01-13T08:20:00Z",
-    },
-  ]);
-
-  const [selectedRecording, setSelectedRecording] =
-    useState<AudioRecording | null>(null); */
 
   // Hero Section Handlers
   const handleTestService = () => {
