@@ -26,8 +26,8 @@ export default function MapDemo() {
   const [audioRecordings] = useState<AudioRecording[]>([
     {
       id: "1",
-      latitude: 57.705659580527445, // Example coordinates near Gothenburg
-      longitude: 11.939961382990896,
+      latitude: 57.705840, // Example coordinates near Gothenburg
+      longitude: 11.936451,
       audioUrl: "https://example.com/recording1.mp3",
       title: "City Sounds",
       createdAt: "2025-01-15T10:30:00Z",
