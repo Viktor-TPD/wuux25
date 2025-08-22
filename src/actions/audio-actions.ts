@@ -1,48 +1,49 @@
-'use server'
+"use server";
 
-import { createClient } from '../../utils/supabase/server'
-import { revalidatePath } from 'next/cache'
+import { createClient } from "../../utils/supabase/server";
+import { revalidatePath } from "next/cache";
 
 export interface AudioUploadData {
-  username?: string | null
-  audioname?: string | null
-  audio_url?: string | null
-  coordinateX?: string | null
-  coordinateY?: string | null
-  moderated?: boolean | null
-  description?: string | null
+  username?: string | null;
+  audioname?: string | null;
+  audio_url?: string | null;
+  coordinateX?: string | null;
+  coordinateY?: string | null;
+  moderated?: boolean | null;
+  description?: string | null;
+  theme?: string | null;
 }
 
 export async function createAudioUpload(audioData: AudioUploadData) {
-  const supabase = await createClient()
+  const supabase = await createClient();
 
   const { data, error } = await supabase
-    .from('AudioUpload')
+    .from("AudioUpload")
     .insert([audioData])
     .select()
-    .single()
+    .single();
 
   if (error) {
-    console.error('Database error inserting audio upload:', error)
-    throw new Error(error.message)
+    console.error("Database error inserting audio upload:", error);
+    throw new Error(error.message);
   }
 
-  revalidatePath('/')
-  return data
+  revalidatePath("/");
+  return data;
 }
 
 export async function getModeratedAudioUploads() {
-  const supabase = await createClient()
+  const supabase = await createClient();
 
   const { data, error } = await supabase
-    .from('AudioUpload')
-    .select('*')
-    .eq('moderated', true)
+    .from("AudioUpload")
+    .select("*")
+    .eq("moderated", true);
 
   if (error) {
-    console.error('Database error getting moderated audio uploads:', error)
-    throw new Error(error.message)
+    console.error("Database error getting moderated audio uploads:", error);
+    throw new Error(error.message);
   }
 
-  return data
+  return data;
 }

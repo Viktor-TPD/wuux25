@@ -237,7 +237,7 @@ export default function RecordingCard({
                 Kategori
               </div>
               <div className="font-bold text-sm text-gray-800 dark:text-gray-200 text-center">
-                Annat
+                {recording.theme || "Annat"}
               </div>
             </div>
 
