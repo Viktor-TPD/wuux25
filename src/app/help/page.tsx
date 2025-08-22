@@ -119,15 +119,8 @@ export default function HelpPage() {
             onClick={handleTestService}
             className="bg-[var(--red)] hover:bg-[var(--dark-red)] font-instrument  text-white font-semibold px-4 rounded-[0.80556rem] transition-colors shadow-lg flex items-center gap-4"
           >
-            <span className=" py-4">Testa Tjänsten</span>
-            <Image
-              src="/hero-recording-icon.svg"
-              alt="Recording icon"
-              width={40}
-                  height={40}
-                  className="flex-shrink-0"
-                />
-              </button>
+            <span className=" py-4">⬅ Tillbaka</span>
+          </button>
         </div>
       </div>
     </div>
