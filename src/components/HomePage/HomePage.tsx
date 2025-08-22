@@ -36,6 +36,7 @@ type DbAudioRow = {
   coordinateX: number;
   coordinateY: number;
   description?: string;
+  theme?: string;
 };
 
 const HomePage: React.FC = () => {
@@ -120,6 +121,7 @@ const HomePage: React.FC = () => {
           latitude: row.coordinateX,
           longitude: row.coordinateY,
           description: row.description,
+          theme: row.theme,
         }));
 
         console.table(recordings);

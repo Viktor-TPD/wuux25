@@ -266,6 +266,7 @@ export default function VoiceRecordingModal({
           coordinateY: currentLocation?.longitude?.toString() || null,
           description: description,
           moderated: false,
+          theme: selectedCategory,
         });
 
         // Show confirmation instead of closing immediately
