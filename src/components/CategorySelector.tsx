@@ -30,7 +30,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
             className={`flex items-center p-3 rounded-lg border cursor-pointer transition-colors ${
               selectedCategory === category.value
                 ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300"
-                : "border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500"
+                : "border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 text-gray-700 dark:text-gray-200"
             }`}
           >
             <input

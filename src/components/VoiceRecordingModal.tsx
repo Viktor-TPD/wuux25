@@ -393,7 +393,6 @@ export default function VoiceRecordingModal({
             </button>
           </div>
         </div>
-
         {/* Content - Scrollable */}
         <div className="flex-1 overflow-y-auto">
           <div className="px-6 py-6">
@@ -471,20 +470,23 @@ export default function VoiceRecordingModal({
             )}
           </div>
         </div>
-
-        {/* Footer - Fixed */}
+        {/* footer */}
         <div className="px-6 py-4 bg-gray-50 dark:bg-gray-700 rounded-b-xl flex-shrink-0">
           <div className="flex justify-between gap-3">
             {!showConfirmation ? (
               <>
-                <button
-                  onClick={
-                    recordingState === "recorded" ? resetRecording : handleClose
-                  }
-                  className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg transition-colors"
-                >
-                  {recordingState === "recorded" ? "Ta bort" : "Avbryt"}
-                </button>
+                <div className="flex-1">
+                  <button
+                    onClick={
+                      recordingState === "recorded"
+                        ? resetRecording
+                        : handleClose
+                    }
+                    className="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg transition-colors"
+                  >
+                    {recordingState === "recorded" ? "Ta bort" : "Avbryt"}
+                  </button>
+                </div>
 
                 {recordingState === "recorded" && (
                   <div className="relative flex-1">
