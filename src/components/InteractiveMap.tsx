@@ -79,15 +79,15 @@ export default function InteractiveMap({
     const userIcon = new L.Icon({
       iconUrl: "/Usersymbol.svg",
       iconRetinaUrl: "/Usersymbol.svg",
-      iconSize: [40, 40],
+      iconSize: [20, 20],
       iconAnchor: [20, 20],
       popupAnchor: [0, -20],
     });
 
     // Unlocked recording icon - medium size, friendly
     const unlockedRecordingIcon = new L.Icon({
-      iconUrl: "/Unlocked.svg",
-      iconRetinaUrl: "/Unlocked.svg",
+      iconUrl: "/NEW_UNLOCKED.svg",
+      iconRetinaUrl: "/NEW_UNLOCKED.svg",
       iconSize: [32, 32],
       iconAnchor: [16, 16],
       popupAnchor: [0, -16],
@@ -95,8 +95,8 @@ export default function InteractiveMap({
 
     // Locked recording icon - same size as unlocked, but different visual
     const lockedRecordingIcon = new L.Icon({
-      iconUrl: "/Locked.svg",
-      iconRetinaUrl: "/Locked.svg",
+      iconUrl: "/NEW_LOCKED.svg",
+      iconRetinaUrl: "/NEW_LOCKED.svg",
       iconSize: [32, 32],
       iconAnchor: [16, 16],
       popupAnchor: [0, -16],
