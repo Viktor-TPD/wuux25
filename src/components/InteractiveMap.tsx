@@ -36,30 +36,30 @@ export default function InteractiveMap({
   const [isLeafletReady, setIsLeafletReady] = useState(false);
   const userLocationRef = useRef<LocationData | null>(null);
 
-    // Store our custom icons
+  // Store our custom icons
   const [customIcons, setCustomIcons] = useState<{
-  userIcon?: Icon;
-  unlockedRecordingIcon?: Icon;
-  lockedRecordingIcon?: Icon;
-}>({});
+    userIcon?: Icon;
+    unlockedRecordingIcon?: Icon;
+    lockedRecordingIcon?: Icon;
+  }>({});
 
   // Create custom icons from external files
   const createCustomIcons = useCallback(async () => {
     const L = await import("leaflet");
-    
+
     // User location icon - larger, more prominent
     const userIcon = new L.Icon({
-      iconUrl: '/Usersymbol.svg',
-      iconRetinaUrl: '/Usersymbol.svg', // Optional: high-res version
-      iconSize: [40, 40],        // Larger for better visibility
-      iconAnchor: [20, 20],      // Center point
-      popupAnchor: [0, -20],     // Popup appears above icon
+      iconUrl: "/Usersymbol.svg",
+      iconRetinaUrl: "/Usersymbol.svg",
+      iconSize: [40, 40],
+      iconAnchor: [20, 20],
+      popupAnchor: [0, -20],
     });
 
     // Unlocked recording icon - medium size, friendly
     const unlockedRecordingIcon = new L.Icon({
-      iconUrl: '/Unlocked.svg',
-      iconRetinaUrl: '/Unlocked.svg', // Optional: high-res version
+      iconUrl: "/Unlocked.svg",
+      iconRetinaUrl: "/Unlocked.svg",
       iconSize: [32, 32],
       iconAnchor: [16, 16],
       popupAnchor: [0, -16],
@@ -67,8 +67,8 @@ export default function InteractiveMap({
 
     // Locked recording icon - same size as unlocked, but different visual
     const lockedRecordingIcon = new L.Icon({
-      iconUrl: '/Locked.svg',
-      iconRetinaUrl: '/Locked.svg', // Optional: high-res version
+      iconUrl: "/Locked.svg",
+      iconRetinaUrl: "/Locked.svg",
       iconSize: [32, 32],
       iconAnchor: [16, 16],
       popupAnchor: [0, -16],
@@ -128,52 +128,6 @@ export default function InteractiveMap({
       setIsLeafletReady(true);
     });
   }, [createCustomIcons]);
-
-/*   // Setup Leaflet CSS and icons
-  useEffect(() => {
-    // Import CSS by adding it to the document head
-    if (typeof document !== "undefined") {
-      const linkElement = document.createElement("link");
-      linkElement.rel = "stylesheet";
-      linkElement.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-      linkElement.integrity =
-        "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";
-      linkElement.crossOrigin = "";
-
-      // Check if CSS is already loaded
-      const existingLink = document.querySelector('link[href*="leaflet.css"]');
-      if (!existingLink) {
-        document.head.appendChild(linkElement);
-      }
-    }
-
-    // Fix default marker icons
-    import("leaflet").then((L) => {
-      // Type-safe way to fix the default icon issue
-      interface DefaultIconPrototype {
-        _getIconUrl?: () => string;
-      }
-
-      const DefaultIcon = L.Icon.Default as typeof Icon & {
-        prototype: DefaultIconPrototype;
-      };
-
-      if (DefaultIcon.prototype._getIconUrl) {
-        delete DefaultIcon.prototype._getIconUrl;
-      }
-
-      DefaultIcon.mergeOptions({
-        iconRetinaUrl:
-          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
-        iconUrl:
-          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-        shadowUrl:
-          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-      });
-
-      setIsLeafletReady(true);
-    });
-  }, []); */
 
   // Calculate distance between two points
   const calculateDistance = (
@@ -400,9 +354,10 @@ export default function InteractiveMap({
           />
 
           {/* User location marker */}
-          <Marker 
-          icon={customIcons.userIcon}
-          position={[userLocation.latitude, userLocation.longitude]}>
+          <Marker
+            icon={customIcons.userIcon}
+            position={[userLocation.latitude, userLocation.longitude]}
+          >
             <Popup>
               <div className="text-sm">
                 <div className="font-semibold mb-1">Your Location</div>
@@ -422,7 +377,8 @@ export default function InteractiveMap({
               icon={
                 recording.isInteractable
                   ? customIcons.unlockedRecordingIcon
-                  : customIcons.lockedRecordingIcon}
+                  : customIcons.lockedRecordingIcon
+              }
               position={[recording.latitude, recording.longitude]}
               eventHandlers={{
                 click: () => {
