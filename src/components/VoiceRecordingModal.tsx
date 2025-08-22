@@ -545,12 +545,12 @@ export function VoiceRecordingButton({
   return (
     <button
       onClick={onClick}
-      className={`bg-[#401db2] hover:bg-[#351771] text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-lg flex gap-1 justify-center w-full ${className}`}
+      className={`bg-[#401db2] hover:bg-[#351771] text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-lg flex gap-8 justify-baseline align-middle w-full ${className}`}
     >
-      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zM19 11a1 1 0 0 1 2 0v1a9 9 0 0 1-8 8.94V22h3a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2h3v-1.06A9 9 0 0 1 3 12v-1a1 1 0 1 1 2 0v1a7 7 0 0 0 14 0v-1z" />
-      </svg>
-      <span>Har du en historia du vill dela?</span>
+      <Image src="/blue-note.svg" alt="Success" width={28} height={28} />
+      <span className="font-instrument font-semibold">
+        Har du en historia du vill dela?
+      </span>
     </button>
   );
 }
