@@ -47,12 +47,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Test Service Button */}
             <button
               onClick={onTestService}
-              className="bg-[#b6163a] hover:bg-[#9d1331] text-white font-medium py-4 px-6 rounded-lg transition-colors shadow-lg flex items-center gap-3 w-full max-w-xs font-inter"
+              className="bg-[var(--red)] hover:bg-[var(--dark-red)] font-instrument  text-white font-semibold px-4 rounded-[0.80556rem] transition-colors shadow-lg flex items-center gap-4"
             >
-              <span>Testa Tjänsten</span>
+              <span className=" py-4">Testa Tjänsten</span>
               <Image
-                src="/success-icon.svg"
-                alt="Success icon"
+                src="/hero-recording-icon.svg"
+                alt="Recording icon"
                 width={40}
                 height={40}
                 className="flex-shrink-0"
@@ -62,22 +62,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Learn More Button */}
             <button
               onClick={onLearnMore}
-              className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-4 px-6 rounded-lg transition-colors shadow-lg flex items-center gap-3 w-full max-w-xs font-inter"
+              className="bg-[var(--blue)] hover:bg-[var(--dark-blue)] text-white font-semibold py-4 px-4 rounded-[0.80556rem] transition-colors shadow-lg flex items-center gap-3 font-instrument"
             >
               <span>Så här fungerar Vibbla</span>
-              <svg
-                className="w-4 h-4 flex-shrink-0"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
+            
             </button>
           </div>
         </div>
