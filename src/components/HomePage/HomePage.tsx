@@ -10,6 +10,20 @@ import VoiceRecordingModal, {
 } from "../VoiceRecordingModal";
 import { AudioRecording } from "../../types/location";
 import { getModeratedAudioUploads } from "@/actions/audio-actions";
+import Image from "next/image";
+
+function useIsMobile(maxWidth: number = 768) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkScreen = () => setIsMobile(window.innerWidth <= maxWidth);
+    checkScreen(); // run once on mount
+    window.addEventListener("resize", checkScreen);
+    return () => window.removeEventListener("resize", checkScreen);
+  }, [maxWidth]);
+
+  return isMobile;
+}
 
 type ViewState = "hero" | "permissions" | "app";
 
@@ -24,6 +38,7 @@ type DbAudioRow = {
 };
 
 const HomePage: React.FC = () => {
+  const isMobile = useIsMobile();
   const router = useRouter();
   const [currentView, setCurrentView] = useState<ViewState>("hero");
   const [isPermissionModalOpen, setIsPermissionModalOpen] = useState(false);
@@ -108,6 +123,24 @@ const HomePage: React.FC = () => {
   const clearLocation = () => {
     setSelectedRecording(null);
   };
+
+   if (!isMobile) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+        <Image
+          src="/Vibbla_logo_white.svg"
+          alt="Vibbla Logo"
+          width={400}
+          height={300}
+          className="mb-6"
+        />
+        <p className="text-lg md:text-xl text-gray-800 dark:text-gray-200 text-center p-6">
+          This application is developed for mobile use. <br />
+          Please switch to a smaller screen.
+        </p>
+      </div>
+    );
+  }
 
   // Render Hero View
   if (currentView === "hero") {
