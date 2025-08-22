@@ -499,7 +499,7 @@ export default function VoiceRecordingModal({
                       onMouseLeave={() => setShowTooltip(false)}
                       className={`w-full font-medium py-3 px-4 rounded-lg transition-colors disabled:cursor-not-allowed ${
                         isFormValid() && !isUploading
-                          ? "bg-blue-600 hover:bg-blue-700 text-white"
+                          ? "bg-rose-600 hover:bg-rose-700 text-white"
                           : "bg-gray-400 text-gray-700 cursor-not-allowed"
                       }`}
                     >
