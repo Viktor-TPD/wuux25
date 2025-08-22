@@ -240,7 +240,12 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
             <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
               <p className="text-sm text-red-700 dark:text-red-300 font-inter">
                 Se över dina tillåtelseinställningar på din enhet för att
-                fortsätta.
+                fortsätta. <br />
+                Har du en iPhone? Navigera till{" "}
+                <b>
+                  Inställningar ⮕ Integritet och Säkerhet ⮕ Platstjänster ⮕
+                </b>{" "}
+                Ge tillåtelse till den browser du använder.
               </p>
             </div>
           )}
