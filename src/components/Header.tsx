@@ -15,7 +15,6 @@ export interface HeaderProps {
 
 const DEFAULT_LINKS: NavLink[] = [
   { label: 'Kontakta oss', href: '/contact' },
-  { label: 'Såhär fungerar Vibbla', href: '/about' },
   { label: 'Hjälpcenter', href: '/help' },
 ]
 

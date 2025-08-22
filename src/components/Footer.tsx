@@ -15,7 +15,7 @@ export interface FooterProps {
 
 const FOOTER_LINKS: NavLink[] = [
   { label: 'Kontakta oss', href: '/contact' },
-  { label: 'Såhär fungerar Vibbla', href: '/about' },
+  { label: 'Såhär fungerar Vibbla', href: '/help' },
 ]
 
 export function Footer({
