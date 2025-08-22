@@ -3,7 +3,34 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
 import type { Map as LeafletMap, LeafletMouseEvent, Icon } from "leaflet";
-import { LocationData, MapProps } from "../types/location";
+import { LocationData } from "../types/location";
+
+interface InteractiveMapProps {
+  userLocation: LocationData | null;
+  audioRecordings: Array<{
+    id: string;
+    createdAt: string;
+    title?: string;
+    audioUrl: string;
+    latitude: number;
+    longitude: number;
+    description?: string;
+    isInteractable?: boolean;
+  }>;
+  defaultZoom?: number;
+  mapStyle?:
+    | "default"
+    | "minimal"
+    | "satellite"
+    | "terrain"
+    | "dark"
+    | "green"
+    | "blue";
+  onRecordingClick?: (
+    recording: InteractiveMapProps["audioRecordings"][0]
+  ) => void;
+  onMapClick?: (lat: number, lng: number) => void;
+}
 
 // Dynamic imports for Leaflet
 const MapContainer = dynamic(
@@ -29,12 +56,13 @@ export default function InteractiveMap({
   mapStyle = "green",
   onRecordingClick,
   onMapClick,
-}: MapProps) {
+}: InteractiveMapProps) {
   const [map, setMap] = useState<LeafletMap | null>(null);
-  const [userHasMoved, setUserHasMoved] = useState(false);
   const [currentZoom, setCurrentZoom] = useState(defaultZoom);
   const [isLeafletReady, setIsLeafletReady] = useState(false);
+  const [shouldFollowUser, setShouldFollowUser] = useState(true);
   const userLocationRef = useRef<LocationData | null>(null);
+  const lastAutoMoveRef = useRef<number>(0);
 
   // Store our custom icons
   const [customIcons, setCustomIcons] = useState<{
@@ -237,13 +265,21 @@ export default function InteractiveMap({
   useEffect(() => {
     if (!map) return;
 
+    const handleMoveStart = () => {
+      // When user manually moves the map, disable auto-following temporarily
+      const now = Date.now();
+      if (now - lastAutoMoveRef.current > 1000) {
+        // Only if it wasn't an auto-move
+        setShouldFollowUser(false);
+      }
+    };
+
     const handleMoveEnd = () => {
-      setUserHasMoved(true);
+      // Optional: could re-enable following after some time of inactivity
     };
 
     const handleZoomEnd = () => {
       setCurrentZoom(map.getZoom());
-      setUserHasMoved(true);
     };
 
     const handleClick = (e: LeafletMouseEvent) => {
@@ -252,11 +288,13 @@ export default function InteractiveMap({
       }
     };
 
+    map.on("movestart", handleMoveStart);
     map.on("moveend", handleMoveEnd);
     map.on("zoomend", handleZoomEnd);
     map.on("click", handleClick);
 
     return () => {
+      map.off("movestart", handleMoveStart);
       map.off("moveend", handleMoveEnd);
       map.off("zoomend", handleZoomEnd);
       map.off("click", handleClick);
@@ -283,36 +321,44 @@ export default function InteractiveMap({
     }
   }, [map, getTileLayerConfig]);
 
-  // Auto-center on user location (only if user hasn't moved map)
+  // Enhanced auto-center on user location with smooth transitions
   useEffect(() => {
-    if (map && userLocation && !userHasMoved) {
-      // Check if this is a significant location change
-      const prevLocation = userLocationRef.current;
-      if (
-        !prevLocation ||
-        calculateDistance(
-          prevLocation.latitude,
-          prevLocation.longitude,
-          userLocation.latitude,
-          userLocation.longitude
-        ) > 5
-      ) {
+    if (!map || !userLocation) return;
+
+    const prevLocation = userLocationRef.current;
+
+    // Check if this is a significant location change (more than 5 meters)
+    const hasSignificantChange =
+      !prevLocation ||
+      calculateDistance(
+        prevLocation.latitude,
+        prevLocation.longitude,
+        userLocation.latitude,
+        userLocation.longitude
+      ) > 5;
+
+    // Auto-follow user if enabled and there's a significant change
+    if (shouldFollowUser && hasSignificantChange) {
+      lastAutoMoveRef.current = Date.now();
+
+      // Smooth pan to new location instead of instant setView
+      if (prevLocation && map.getZoom() >= 14) {
+        // Use panTo for smooth movement when already positioned
+        map.panTo([userLocation.latitude, userLocation.longitude], {
+          animate: true,
+          duration: 1.0, // 1 second smooth transition
+        });
+      } else {
+        // Use setView for initial positioning or when zoomed out
         map.setView(
           [userLocation.latitude, userLocation.longitude],
-          defaultZoom
+          Math.max(defaultZoom, map.getZoom())
         );
       }
     }
-    userLocationRef.current = userLocation;
-  }, [map, userLocation, userHasMoved, defaultZoom]);
 
-  const recenterOnUser = () => {
-    if (map && userLocation) {
-      map.setView([userLocation.latitude, userLocation.longitude], defaultZoom);
-      setUserHasMoved(false);
-      setCurrentZoom(defaultZoom);
-    }
-  };
+    userLocationRef.current = userLocation;
+  }, [map, userLocation, shouldFollowUser, defaultZoom]);
 
   if (!userLocation) {
     return (
@@ -360,11 +406,11 @@ export default function InteractiveMap({
           >
             <Popup>
               <div className="text-sm">
-                <div className="font-semibold mb-1">Your Location</div>
+                <div className="font-semibold mb-1">Din Position</div>
                 <div>Lat: {userLocation.latitude.toFixed(6)}</div>
                 <div>Lng: {userLocation.longitude.toFixed(6)}</div>
                 <div className="text-gray-600 mt-1">
-                  ±{Math.round(userLocation.accuracy)}m accuracy
+                  ±{Math.round(userLocation.accuracy)}m noggrannhet
                 </div>
               </div>
             </Popup>
@@ -407,7 +453,7 @@ export default function InteractiveMap({
                           recording.longitude
                         )
                       )}
-                      m away
+                      m bort
                     </div>
                   )}
                   {recording.isInteractable ? (
@@ -415,11 +461,11 @@ export default function InteractiveMap({
                       onClick={() => onRecordingClick?.(recording)}
                       className="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs py-1 px-2 rounded"
                     >
-                      🎵 Play Recording
+                      🎵 Spela upp
                     </button>
                   ) : (
                     <div className="text-xs text-gray-500 text-center">
-                      Get closer to interact (within 10m)
+                      Gå närmare för att interagera (inom 10m)
                     </div>
                   )}
                 </div>
@@ -431,27 +477,8 @@ export default function InteractiveMap({
 
       {/* Map controls overlay */}
       <div className="absolute top-4 right-4 space-y-2 z-[1000]">
-        {userHasMoved && (
-          <button
-            onClick={recenterOnUser}
-            className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-lg shadow-lg text-sm font-medium transition-colors"
-          >
-            📍 Recenter
-          </button>
-        )}
-
         <div className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-lg shadow-lg text-xs text-gray-600 dark:text-gray-400">
           Zoom: {currentZoom}
-        </div>
-      </div>
-
-      {/* Recording count indicator */}
-      <div className="absolute bottom-4 left-4 z-[1000]">
-        <div className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-lg shadow-lg text-sm">
-          <span className="text-gray-600 dark:text-gray-400">
-            {visibleRecordings.filter((r) => r.isInteractable).length} /{" "}
-            {visibleRecordings.length} recordings nearby
-          </span>
         </div>
       </div>
     </div>
