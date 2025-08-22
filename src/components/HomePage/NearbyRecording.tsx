@@ -84,9 +84,17 @@ export default function NearbyRecordings({
     return null;
   }
 
-  // Don't render if no recordings are nearby
+  // Render empty state message if no recordings are nearby
   if (visibleRecordings.length === 0) {
-    return null;
+    return (
+      <div className="mt-6">
+        <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+          <p className="text-lg font-medium">
+            Gå omkring för att upptäcka nya ljud!
+          </p>
+        </div>
+      </div>
+    );
   }
 
   return (

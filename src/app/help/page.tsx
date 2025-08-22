@@ -105,7 +105,7 @@ export default function HelpPage() {
               <h3 className="text-xl font-semibold text-white mb-2 font-instrument">
                 Dela din berättelse
               </h3>
-              <p className="text-white/90 font-inter">
+              <p className="text-white/90 font-instrument font-semibold">
                 Tryck på &ldquo;Har du en historia du vill dela?&rdquo; för att
                 lämna kvar ditt eget minne som andra kan upptäcka.
               </p>

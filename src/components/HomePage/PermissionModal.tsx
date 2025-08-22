@@ -255,7 +255,7 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
             onClick={handleContinue}
             className={`w-full font-medium py-3 px-4 rounded-lg transition-colors font-inter ${
               areAllPermissionsChecked
-                ? "bg-red-600 hover:bg-red-700 text-white"
+                ? "bg-rose-600 hover:bg-rose-700 text-white"
                 : "bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed"
             }`}
           >
