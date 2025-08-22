@@ -2,11 +2,8 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { LocationData, AudioRecording } from "../../types/location";
+import { AUDIO_DISTANCES } from "../../config/distances";
 import RecordingCard from "./RecordingCard";
-
-// Distance configuration - easily adjustable
-const LOAD_DISTANCE = 20; // meters - distance to load a card
-const UNLOAD_DISTANCE = 40; // meters - distance to unload a card
 
 interface NearbyRecordingsProps {
   userLocation: LocationData | null;
@@ -61,11 +58,14 @@ export default function NearbyRecordings({
         const isCurrentlyLoaded = newLoaded.has(recording.id);
 
         // Load recording if within load distance and not already loaded
-        if (!isCurrentlyLoaded && distance <= LOAD_DISTANCE) {
+        if (!isCurrentlyLoaded && distance <= AUDIO_DISTANCES.LOAD_DISTANCE) {
           newLoaded.add(recording.id);
         }
         // Unload recording if beyond unload distance and currently loaded
-        else if (isCurrentlyLoaded && distance > UNLOAD_DISTANCE) {
+        else if (
+          isCurrentlyLoaded &&
+          distance > AUDIO_DISTANCES.UNLOAD_DISTANCE
+        ) {
           newLoaded.delete(recording.id);
         }
       });
@@ -108,7 +108,7 @@ export default function NearbyRecordings({
             key={recording.id}
             recording={recording}
             distance={distance}
-            isInteractable={distance <= 10} // 10m threshold for interaction
+            isInteractable={distance <= AUDIO_DISTANCES.INTERACTION_DISTANCE} // Now using 40m threshold
           />
         );
       })}

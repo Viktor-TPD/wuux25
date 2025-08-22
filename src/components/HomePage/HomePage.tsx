@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useUserLocation } from "../../hooks/useUserLocation";
 import HeroSection from "./HeroSection";
@@ -10,6 +10,7 @@ import VoiceRecordingModal, {
 import NearbyRecordings from "./NearbyRecording";
 import { AudioRecording } from "../../types/location";
 import { getModeratedAudioUploads } from "@/actions/audio-actions";
+import { AUDIO_DISTANCES } from "../../config/distances";
 import Image from "next/image";
 
 function useIsMobile(maxWidth: number = 768) {
@@ -55,6 +56,53 @@ const HomePage: React.FC = () => {
   const [audioRecordings, setAudioRecordings] = useState<AudioRecording[]>([]);
   const [selectedRecording, setSelectedRecording] =
     useState<AudioRecording | null>(null);
+
+  // Calculate distance between two points using Haversine formula
+  const calculateDistance = (
+    lat1: number,
+    lng1: number,
+    lat2: number,
+    lng2: number
+  ) => {
+    const R = 6371e3; // Earth's radius in meters
+    const φ1 = (lat1 * Math.PI) / 180;
+    const φ2 = (lat2 * Math.PI) / 180;
+    const Δφ = ((lat2 - lat1) * Math.PI) / 180;
+    const Δλ = ((lng2 - lng1) * Math.PI) / 180;
+
+    const a =
+      Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c; // Distance in meters
+  };
+
+  // Enhanced recordings with distance calculations and interactability
+  const enhancedRecordings = useMemo(() => {
+    if (!userLocation) {
+      return audioRecordings.map((recording) => ({
+        ...recording,
+        isInteractable: false,
+        distance: Infinity,
+      }));
+    }
+
+    return audioRecordings.map((recording) => {
+      const distance = calculateDistance(
+        userLocation.latitude,
+        userLocation.longitude,
+        recording.latitude,
+        recording.longitude
+      );
+
+      return {
+        ...recording,
+        isInteractable: distance <= AUDIO_DISTANCES.INTERACTION_DISTANCE,
+        distance,
+      };
+    });
+  }, [userLocation, audioRecordings]);
 
   useEffect(() => {
     async function fetchData() {
@@ -197,17 +245,17 @@ const HomePage: React.FC = () => {
         <div className="w-full">
           <InteractiveMap
             userLocation={userLocation}
-            audioRecordings={audioRecordings}
+            audioRecordings={enhancedRecordings}
             defaultZoom={15}
             onRecordingClick={handleRecordingClick}
             onMapClick={handleMapClick}
           />
         </div>
 
-        {/* Nearby Recordings List */}
+        {/* Nearby Recordings List - now using enhanced recordings */}
         <NearbyRecordings
           userLocation={userLocation}
-          audioRecordings={audioRecordings}
+          audioRecordings={enhancedRecordings}
         />
 
         {/* Recording Info Panel - Only show when recording is selected */}

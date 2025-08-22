@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
 import type { Map as LeafletMap, LeafletMouseEvent, Icon } from "leaflet";
 import { LocationData } from "../types/location";
+import { AUDIO_DISTANCES } from "../config/distances";
 
 interface InteractiveMapProps {
   userLocation: LocationData | null;
@@ -192,7 +193,7 @@ export default function InteractiveMap({
 
       return {
         ...recording,
-        isInteractable: distance <= 10, // 10 meter threshold
+        isInteractable: distance <= AUDIO_DISTANCES.INTERACTION_DISTANCE, // Now using 40m threshold
       };
     });
   };
@@ -465,7 +466,7 @@ export default function InteractiveMap({
                     </button>
                   ) : (
                     <div className="text-xs text-gray-500 text-center">
-                      Gå närmare för att interagera (inom 10m)
+                      Gå närmare för att interagera (inom 40m)
                     </div>
                   )}
                 </div>
