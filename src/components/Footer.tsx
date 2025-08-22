@@ -30,8 +30,8 @@ export function Footer({
 
   return (
     <footer className={`bg-(--dark-grey) flex flex-row justify-between shadow-md ${className}`}>
-        <div className='footer-info'>
-            <ul className='flex-col'>
+        <div className='footer-info justify-between flex flex-col gap-16 px-8 py-8'>
+            <ul className='flex-col flex gap-2'>
                     {links.map((l) => (
               <li key={l.href}>
                 <Link
@@ -48,18 +48,20 @@ export function Footer({
             ))}
                 
             </ul>
+            <div>
                 <Link href="/" className="flex items-center">
-          {logo ? (
-            <span className="h-8 w-auto">{logo}</span>
-          ) : (
-            <span className="text-lg font-bold">{siteTitle}</span>
-          )}
-        </Link>
-            <p className="text-[var(--Lightlightgrey)] font-inter text-[0.625rem] font-light leading-[150%] tracking-[0.06188rem]">
-                Upptäck platsen genom andras ljudminnen
-            </p>
+                  {logo ? (
+                    <span className="h-8 w-auto">{logo}</span>
+                  ) : (
+                    <span className="text-lg font-bold">{siteTitle}</span>
+                  )}
+                </Link>
+                <p className="text-[var(--Lightlightgrey)] font-inter text-[0.625rem] font-light leading-[150%] tracking-[0.06188rem]">
+                    Upptäck platsen genom andras ljudminnen
+                </p>
+            </div>
         </div>
-        <div className='footer-logos flex flex-row gap-2'>
+        <div className='footer-logos flex flex-row gap-2 px-8 py-8'>
             <Link href="https://www.facebook.com">
                 <Image 
                     src="/Facebook.svg"
@@ -74,14 +76,6 @@ export function Footer({
                     width={16}
                     height={16}
                     alt="Instagram link"
-                />
-            </Link>
-            <Link href="https://www.facebook.com/d">
-                <Image 
-                    src="/Facebook.svg"
-                    width={16}
-                    height={16}
-                    alt="Facebook link"
                 />
             </Link>
         </div>
