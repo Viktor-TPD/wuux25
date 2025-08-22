@@ -3,11 +3,11 @@ import { useRouter } from "next/navigation";
 import { useUserLocation } from "../../hooks/useUserLocation";
 import HeroSection from "./HeroSection";
 import PermissionModal from "./PermissionModal";
-import LocationControls from "../LocationControls";
 import InteractiveMap from "../InteractiveMap";
 import VoiceRecordingModal, {
   VoiceRecordingButton,
 } from "../VoiceRecordingModal";
+import NearbyRecordings from "./NearbyRecording";
 import { AudioRecording } from "../../types/location";
 import { getModeratedAudioUploads } from "@/actions/audio-actions";
 import Image from "next/image";
@@ -44,15 +44,7 @@ const HomePage: React.FC = () => {
   const [isPermissionModalOpen, setIsPermissionModalOpen] = useState(false);
   const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
 
-  const {
-    location: userLocation,
-    error,
-    isLoading,
-    isWatching,
-    getCurrentPosition,
-    startWatching,
-    stopWatching,
-  } = useUserLocation();
+  const { location: userLocation, getCurrentPosition } = useUserLocation();
 
   const [audioRecordings, setAudioRecordings] = useState<AudioRecording[]>([]);
   const [selectedRecording, setSelectedRecording] =
@@ -120,11 +112,7 @@ const HomePage: React.FC = () => {
     // Here you could add functionality to place new recording markers
   };
 
-  const clearLocation = () => {
-    setSelectedRecording(null);
-  };
-
-   if (!isMobile) {
+  if (!isMobile) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
         <Image
@@ -164,11 +152,7 @@ const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-gray-100 font-instrument">
-          Upptäck Lindholmen
-        </h1>
-
-        <div className="flex justify-center mb-6">
+        <div className="mb-6">
           <VoiceRecordingButton onClick={() => setIsVoiceModalOpen(true)} />
         </div>
 
@@ -178,93 +162,68 @@ const HomePage: React.FC = () => {
           userLocation={userLocation}
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Controls Sidebar */}
-          <div className="lg:col-span-1 space-y-6">
-            <LocationControls
-              location={userLocation}
-              error={error}
-              isLoading={isLoading}
-              isWatching={isWatching}
-              onGetLocation={getCurrentPosition}
-              onStartWatching={startWatching}
-              onStopWatching={stopWatching}
-              onClearLocation={clearLocation}
-            />
-
-            {/* Recording Info Panel */}
-            {selectedRecording && (
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4">
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">
-                  Selected Recording
-                </h3>
-
-                <div className="space-y-2 text-sm">
-                  <div>
-                    <span className="font-medium text-gray-600 dark:text-gray-400">
-                      Title:
-                    </span>
-                    <div className="text-gray-800 dark:text-gray-200">
-                      {selectedRecording.title}
-                    </div>
-                  </div>
-
-                  <div>
-                    <span className="font-medium text-gray-600 dark:text-gray-400">
-                      Created:
-                    </span>
-                    <div className="text-gray-800 dark:text-gray-200">
-                      {new Date(
-                        selectedRecording.createdAt
-                      ).toLocaleDateString()}
-                    </div>
-                  </div>
-
-                  <div>
-                    <span className="font-medium text-gray-600 dark:text-gray-400">
-                      Location:
-                    </span>
-                    <div className="text-gray-800 dark:text-gray-200 font-mono text-xs">
-                      {selectedRecording.latitude.toFixed(6)},{" "}
-                      {selectedRecording.longitude.toFixed(6)}
-                    </div>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => setSelectedRecording(null)}
-                  className="w-full mt-4 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors"
-                >
-                  Close
-                </button>
-              </div>
-            )}
-
-            {/* Instructions */}
-            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-              <h3 className="text-sm font-semibold text-blue-800 dark:text-blue-200 mb-2">
-                Så här använder du Vibbla:
-              </h3>
-              <ul className="text-xs text-blue-700 dark:text-blue-300 space-y-1">
-                <li>• Gå närmare ljudmarkörer för att lyssna</li>
-                <li>• Klicka på inspelningar för att spela dem</li>
-                <li>• Använd &ldquo;Centrera&rdquo; om du flyttar kartan</li>
-                <li>• &ldquo;Spåra&rdquo; läge följer din rörelse</li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Main Map Area */}
-          <div className="lg:col-span-3">
-            <InteractiveMap
-              userLocation={userLocation}
-              audioRecordings={audioRecordings}
-              defaultZoom={15}
-              onRecordingClick={handleRecordingClick}
-              onMapClick={handleMapClick}
-            />
-          </div>
+        {/* Main Map Area */}
+        <div className="w-full">
+          <InteractiveMap
+            userLocation={userLocation}
+            audioRecordings={audioRecordings}
+            defaultZoom={15}
+            onRecordingClick={handleRecordingClick}
+            onMapClick={handleMapClick}
+          />
         </div>
+
+        {/* Nearby Recordings List */}
+        <NearbyRecordings
+          userLocation={userLocation}
+          audioRecordings={audioRecordings}
+        />
+
+        {/* Recording Info Panel - Only show when recording is selected */}
+        {selectedRecording && (
+          <div className="mt-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4">
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">
+              Selected Recording
+            </h3>
+
+            <div className="space-y-2 text-sm">
+              <div>
+                <span className="font-medium text-gray-600 dark:text-gray-400">
+                  Title:
+                </span>
+                <div className="text-gray-800 dark:text-gray-200">
+                  {selectedRecording.title}
+                </div>
+              </div>
+
+              <div>
+                <span className="font-medium text-gray-600 dark:text-gray-400">
+                  Created:
+                </span>
+                <div className="text-gray-800 dark:text-gray-200">
+                  {new Date(selectedRecording.createdAt).toLocaleDateString()}
+                </div>
+              </div>
+
+              <div>
+                <span className="font-medium text-gray-600 dark:text-gray-400">
+                  Location:
+                </span>
+                <div className="text-gray-800 dark:text-gray-200 font-mono text-xs">
+                  {selectedRecording.latitude.toFixed(6)},{" "}
+                  {selectedRecording.longitude.toFixed(6)}
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setSelectedRecording(null)}
+              className="w-full mt-4 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors"
+            >
+              Close
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
