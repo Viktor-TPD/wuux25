@@ -45,7 +45,7 @@ export default function RecordingCard({
   // Handle play/pause
   const handlePlayPause = async () => {
     if (!isInteractable) {
-      setError("Gå närmare för att lyssna");
+      setError("Gå närmare för att lyssna (inom 40m)");
       return;
     }
 
