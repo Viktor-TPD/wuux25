@@ -117,17 +117,17 @@ export default function HelpPage() {
         <div className="flex justify-end mt-6">
           <button
             onClick={handleTestService}
-            className="bg-[#b6163a] hover:bg-rose-700 text-white font-medium py-4 px-6 rounded-lg transition-colors shadow-lg flex items-center gap-3 font-inter"
+            className="bg-[var(--red)] hover:bg-[var(--dark-red)] font-instrument  text-white font-semibold px-4 rounded-[0.80556rem] transition-colors shadow-lg flex items-center gap-4"
           >
-            <span>Testa Tjänsten</span>
+            <span className=" py-4">Testa Tjänsten</span>
             <Image
-              src="/success-icon.svg"
-              alt="Success icon"
+              src="/hero-recording-icon.svg"
+              alt="Recording icon"
               width={40}
-              height={40}
-              className="flex-shrink-0"
-            />
-          </button>
+                  height={40}
+                  className="flex-shrink-0"
+                />
+              </button>
         </div>
       </div>
     </div>

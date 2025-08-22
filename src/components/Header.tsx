@@ -15,7 +15,7 @@ export interface HeaderProps {
 
 const DEFAULT_LINKS: NavLink[] = [
   { label: 'Kontakta oss', href: '/contact' },
-  { label: 'Hjälpcenter', href: '/help' },
+  { label: 'Så här fungerar Vibbla', href: '/help' },
 ]
 
 export function Header({
@@ -60,13 +60,14 @@ export function Header({
                 strokeLinejoin="round"
                 strokeWidth={2}
                 d="M6 18L18 6M6 6l12 12"
+                className=' stroke-[var(--offwhite)]'
               />
             </svg>
           ) : (
             // Hamburger (3 lines)
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="h-6 w-6 "
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -76,6 +77,7 @@ export function Header({
                 strokeLinejoin="round"
                 strokeWidth={2}
                 d="M4 6h16M4 12h16M4 18h16"
+                className=' stroke-[var(--offwhite)]'
               />
             </svg>
           )}
@@ -84,8 +86,8 @@ export function Header({
 
       {/* Expanding menu */}
       {open && (
-        <nav className="flex justify-center bg-(--dark-grey) border-b">
-          <ul className="flex-col flex text-center gap-4 py-8">
+        <nav className="flex justify-center bg-(--dark-grey) border-b-[var(--offwhite)] font-instrument">
+          <ul className="flex-col flex text-center gap-4 py-4">
             {links.map((l) => (
               <li key={l.href}>
                 <Link
@@ -93,7 +95,7 @@ export function Header({
                   {...(l.external
                     ? { target: '_blank', rel: 'noopener noreferrer' }
                     : {})}
-                  className="text-sm font-medium hover:underline"
+                  className="text-sm font-bold leading-normal hover:underline text-[var(--offwhite)]"
                   onClick={() => setOpen(false)}
                 >
                   {l.label}

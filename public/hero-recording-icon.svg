@@ -1,0 +1,25 @@
+<svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="14.1177" cy="14.5556" r="13.7621" fill="#E53E63"/>
+<rect x="4.10889" y="4.75525" width="20.0177" height="20.0177" rx="10.0088" fill="#B6163A"/>
+<g clip-path="url(#clip0_159_4410)">
+<path d="M11.4286 18.9413C10.8493 18.7465 10.4227 18.3735 10.1488 17.8223C9.875 17.271 9.83547 16.7057 10.0303 16.1264C10.225 15.5471 10.5981 15.1205 11.1493 14.8467C11.7006 14.5729 12.2658 14.5333 12.8452 14.7281C13.047 14.796 13.2225 14.8843 13.3716 14.993C13.5324 15.0959 13.6755 15.2222 13.8011 15.3719L15.6692 9.81573L18.8291 10.8782L18.1208 12.9848L16.0142 12.2765L14.2435 17.543C14.0487 18.1223 13.6757 18.5489 13.1244 18.8227C12.5732 19.0966 12.0079 19.1361 11.4286 18.9413Z" fill="#FFF9F1"/>
+</g>
+<g filter="url(#filter0_d_159_4410)">
+<path d="M11.4577 18.7198C10.8784 18.525 10.4518 18.152 10.178 17.6007C9.90418 17.0495 9.86465 16.4842 10.0594 15.9049C10.2542 15.3255 10.6272 14.899 11.1785 14.6251C11.7297 14.3513 12.295 14.3118 12.8743 14.5065C13.0762 14.5744 13.2517 14.6627 13.4008 14.7715C13.5615 14.8744 13.7047 15.0007 13.8302 15.1504L15.6984 9.59418L18.8583 10.6566L18.15 12.7632L16.0434 12.0549L14.2726 17.3214C14.0779 17.9008 13.7048 18.3273 13.1536 18.6012C12.6023 18.875 12.0371 18.9145 11.4577 18.7198Z" fill="#FFF9F1"/>
+</g>
+<defs>
+<filter id="filter0_d_159_4410" x="6.92363" y="9.59412" width="14.949" height="15.2758" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="3.01435"/>
+<feGaussianBlur stdDeviation="1.50718"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_159_4410"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_159_4410" result="shape"/>
+</filter>
+<clipPath id="clip0_159_4410">
+<rect width="13.3349" height="13.3349" fill="white" transform="translate(9.88049 6.11084) rotate(18.5839)"/>
+</clipPath>
+</defs>
+</svg>

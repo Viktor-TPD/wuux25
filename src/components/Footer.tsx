@@ -39,7 +39,7 @@ export function Footer({
                   {...(l.external
                     ? { target: '_blank', rel: 'noopener noreferrer' }
                     : {})}
-                  className="text-sm font-medium font-inter hover:underline"
+                  className="text-sm font-medium font-inter hover:underline text-[var(--offwhite)]"
                   onClick={() => setOpen(false)}
                 >
                   {l.label}
@@ -56,7 +56,7 @@ export function Footer({
                     <span className="text-lg font-bold">{siteTitle}</span>
                   )}
                 </Link>
-                <p className="text-[var(--Lightlightgrey)] font-inter text-[0.625rem] font-light leading-[150%] tracking-[0.06188rem]">
+                <p className="text-[var(--offwhite)] font-inter text-[0.625rem] font-light leading-[150%] tracking-[0.06188rem]">
                     Upptäck platsen genom andras ljudminnen
                 </p>
             </div>
