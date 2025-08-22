@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 interface PermissionModalProps {
   isOpen: boolean;
@@ -23,9 +23,22 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
   const [showWarning, setShowWarning] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
-  const handleClose = () => {
-    setIsClosing(true);
-    setTimeout(() => onClose(), 200);
+  const handleClose = useCallback(
+    (e?: React.MouseEvent) => {
+      e?.stopPropagation(); // Prevent event bubbling
+      setIsClosing(true);
+      setTimeout(() => {
+        onClose();
+      }, 200);
+    },
+    [onClose]
+  );
+
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    // Close modal when clicking on backdrop
+    if (e.target === e.currentTarget) {
+      handleClose();
+    }
   };
 
   const handlePermissionChange = (type: keyof PermissionState) => {
@@ -67,11 +80,14 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
   const areAllPermissionsChecked =
     permissions.location && permissions.microphone;
 
-  // Reset state when modal opens
+  // Reset state when modal opens/closes
   useEffect(() => {
     if (isOpen) {
       setPermissions({ location: false, microphone: false });
       setShowWarning(false);
+      setIsClosing(false);
+    } else {
+      // Reset closing state when modal is fully closed
       setIsClosing(false);
     }
   }, [isOpen]);
@@ -89,18 +105,27 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
     };
   }, [isOpen]);
 
-  if (!isOpen && !isClosing) return null;
+  // Handle Escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        handleClose();
+      }
+    };
 
-  const shouldShowClosing = isClosing || (!isOpen && isClosing);
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isOpen, handleClose]);
+
+  if (!isOpen && !isClosing) return null;
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-[9999] p-4"
+      className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-[9999] p-4"
       style={{
-        animation: shouldShowClosing
-          ? "fadeOut 0.2s ease-in"
-          : "fadeIn 0.2s ease-out",
+        animation: isClosing ? "fadeOut 0.2s ease-in" : "fadeIn 0.2s ease-out",
       }}
+      onClick={handleBackdropClick}
     >
       <style>
         {`
@@ -114,10 +139,11 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
       <div
         className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-md mx-auto"
         style={{
-          animation: shouldShowClosing
+          animation: isClosing
             ? "slideDown 0.2s ease-in"
             : "slideUp 0.2s ease-out",
         }}
+        onClick={(e) => e.stopPropagation()} // Prevent modal from closing when clicking inside
       >
         {/* Header */}
         <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
@@ -127,7 +153,8 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
             </h2>
             <button
               onClick={handleClose}
-              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors p-1"
+              aria-label="Close modal"
             >
               <svg
                 className="w-6 h-6"
