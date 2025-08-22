@@ -44,7 +44,13 @@ const HomePage: React.FC = () => {
   const [isPermissionModalOpen, setIsPermissionModalOpen] = useState(false);
   const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
 
-  const { location: userLocation, getCurrentPosition } = useUserLocation();
+  const {
+    location: userLocation,
+    getCurrentPosition,
+    startWatching,
+    stopWatching,
+    isWatching,
+  } = useUserLocation();
 
   const [audioRecordings, setAudioRecordings] = useState<AudioRecording[]>([]);
   const [selectedRecording, setSelectedRecording] =
@@ -78,6 +84,31 @@ const HomePage: React.FC = () => {
 
     fetchData();
   }, []);
+
+  // Start real-time tracking when app view is active
+  useEffect(() => {
+    if (currentView === "app" && !isWatching) {
+      // Get initial position first
+      getCurrentPosition();
+      // Then start continuous tracking
+      setTimeout(() => {
+        startWatching();
+      }, 1000); // Small delay to avoid conflicts
+    }
+
+    // Cleanup: stop watching when leaving app view
+    return () => {
+      if (currentView !== "app" && isWatching) {
+        stopWatching();
+      }
+    };
+  }, [
+    currentView,
+    isWatching,
+    getCurrentPosition,
+    startWatching,
+    stopWatching,
+  ]);
 
   // Hero Section Handlers
   const handleTestService = () => {
