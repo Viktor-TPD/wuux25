@@ -435,42 +435,30 @@ export default function InteractiveMap({
                 },
               }}
             >
-              <Popup>
-                <div className="text-sm">
-                  <div className="font-semibold mb-1">
-                    {recording.title || "Audio Recording"}
-                  </div>
-                  <div className="text-gray-600 mb-2">
-                    {new Date(recording.createdAt).toLocaleDateString()}
-                  </div>
-                  {userLocation && (
-                    <div className="text-xs text-blue-600 dark:text-blue-400 mb-2 font-mono">
-                      📏{" "}
-                      {Math.round(
-                        calculateDistance(
-                          userLocation.latitude,
-                          userLocation.longitude,
-                          recording.latitude,
-                          recording.longitude
-                        )
-                      )}
-                      m bort
-                    </div>
-                  )}
-                  {recording.isInteractable ? (
-                    <button
-                      onClick={() => onRecordingClick?.(recording)}
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs py-1 px-2 rounded"
-                    >
-                      🎵 Spela upp
-                    </button>
-                  ) : (
-                    <div className="text-xs text-gray-500 text-center">
-                      Gå närmare för att interagera (inom 40m)
-                    </div>
-                  )}
-                </div>
-              </Popup>
+        <Popup className="custom-popup">
+  <div className={`text-sm ${recording.isInteractable ? 'bg-[var(--green)]' : 'bg-[var(--red)]'} h-full w-full p-8 flex flex-col justify-center rounded-lg gap-2`}>
+    <div className="text-white text-center font-semibold text-base pb-2">
+      {"Namn: " + recording.title || "Audio Recording"}
+    </div>
+    
+    {recording.isInteractable ? (
+      <>
+        <div className="flex gap-2">
+          <img src="/recording_unlocked.svg" alt="" />
+          <span className="text-[var(--Off-White,#FFF9F1)] text-center font-semibold text-[0.90456rem] font-['Instrument_Sans']">Ljudet är upplåst</span>
+        </div>
+        <div className="text-white font-normal text-[0.67844rem] font-instrument">
+          Tryck nedan för att spela
+        </div>
+      </>
+    ) : (
+      <div className="flex gap-2">
+        <img src="/regording_locked.svg" alt="" />
+        <span className="text-[var(--Off-White,#FFF9F1)] text-center font-semibold text-[0.90456rem] font-['Instrument_Sans']">Ljudet är låst, gå närmare för att spela</span>
+      </div>
+    )}
+  </div>
+</Popup>
             </Marker>
           ))}
         </MapContainer>

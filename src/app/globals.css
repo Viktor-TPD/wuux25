@@ -56,3 +56,33 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.custom-popup .leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  padding: 0;
+overflow: hidden;
+}
+
+.custom-popup .leaflet-popup-tip {
+  display: none; /* Hides the speech bubble arrow */
+}
+
+.custom-popup .leaflet-popup-content {
+  margin: 0; /* Removes any default margins */
+  padding: 0;
+  width: auto;
+}
+
+.custom-popup .leaflet-popup-close-button {
+  background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent background */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+}
