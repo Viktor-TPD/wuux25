@@ -57,7 +57,18 @@ const RecordingControls: React.FC<RecordingControlsProps> = ({
 
         {recordingState === "recorded" && (
           <div className="flex items-center justify-center gap-3">
-            {/* Play Button */}
+            {/* Redo Button - Now First */}
+            <button
+              onClick={onResetRecording}
+              className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-3 rounded-lg flex items-center gap-2 transition-colors shadow-lg text-sm"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" />
+              </svg>
+              <span className="font-medium">Börja om</span>
+            </button>
+
+            {/* Play Button - Now Second */}
             <button
               onClick={isPlaying ? onStopPlayback : onPlayRecording}
               className="bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg flex items-center gap-2 transition-colors shadow-lg text-sm"
@@ -86,17 +97,6 @@ const RecordingControls: React.FC<RecordingControlsProps> = ({
                 </>
               )}
             </button>
-
-            {/* Redo Button */}
-            <button
-              onClick={onResetRecording}
-              className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-3 rounded-lg flex items-center gap-2 transition-colors shadow-lg text-sm"
-            >
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" />
-              </svg>
-              <span className="font-medium">Börja om</span>
-            </button>
           </div>
         )}
       </div>
@@ -107,7 +107,7 @@ const RecordingControls: React.FC<RecordingControlsProps> = ({
           {recordingState === "idle" && "Tryck för att spela in."}
           {recordingState === "recording" &&
             "Spelar in... Tryck för att avsluta."}
-          {recordingState === "recorded" && "Packat och klart!"}
+          {recordingState === "recorded" && "Vi har tagit emot din inspelning!"}
         </p>
       </div>
     </>
